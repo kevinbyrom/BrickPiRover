@@ -1,11 +1,14 @@
 from rover import Rover
-from joypads.console import ConsoleJoypad
-from joypads.udp import UdpJoypad
 
 deadzone = 0.1
 
 rover = Rover()
-joypad = UdpJoypad()#ConsoleJoypad()
+
+#from joypads.console import ConsoleJoypad
+#joypad = UdpJoypad()#ConsoleJoypad()
+
+from joypads.udp import UdpJoypad
+joypad = UdpJoypad()
 
 try:
     rover.startup()
@@ -27,7 +30,7 @@ try:
         else:
             rover.stop()
 
-        # Update the rover to control the BP
+        # Update the rover 
 
         rover.update()
 

@@ -1,6 +1,6 @@
-from joypads.joypad import JoypadBase
+from controllers.base import ControllerBase
 
-class ConsoleJoypad(JoypadBase):
+class ConsoleJoypad(ControllerBase):
     def __init__(self):
         super().__init__()
 

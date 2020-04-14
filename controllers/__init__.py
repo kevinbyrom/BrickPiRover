@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class JoypadBase():
+class ControllerBase():
     def __init__(self):
 
         # Initialize the stick values
