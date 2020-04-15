@@ -5,9 +5,6 @@ deadzone = 0.1
 
 
 class DiscreteSteering():
-    def __init__(self):
-        super.__init__()
-
     def apply(self, rover, controller):
         if controller.left_stick_y < -deadzone:
             rover.reverse(-controller.left_stick_y)
