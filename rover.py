@@ -32,6 +32,11 @@ class Rover:
         self.left_motor = 0.0
         self.right_motor = 0.0
 
+    def thrust(self, left_power, right_power):
+        print('Moving forward')
+        self.left_motor = left_power
+        self.right_motor = right_power
+
     def forward(self, power):
         print('Moving forward')
         self.left_motor = power

@@ -1,6 +1,6 @@
-from controllers.base import ControllerBase
+from controllers import ControllerBase
 
-class ConsoleJoypad(ControllerBase):
+class ConsoleController(ControllerBase):
     def __init__(self):
         super().__init__()
 

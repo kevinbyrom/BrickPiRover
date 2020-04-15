@@ -1,34 +1,27 @@
 from rover import Rover
 
-deadzone = 0.1
 
 rover = Rover()
 
-#from joypads.console import ConsoleJoypad
-#joypad = UdpJoypad()#ConsoleJoypad()
+#from controllers.console import ConsoleController
+#ctl = ConsoleController()
 
-from joypads.udp import UdpJoypad
-joypad = UdpJoypad()
+from controllers.udp import UdpController
+ctl = UdpController()
+
+from steering.single_stick import SingleStickSteering
+steering = SingleStickSteering()
 
 try:
     rover.startup()
 
-    while joypad.back == False:
+    while ctl.back == False:
 
-        # Move rover based on joypad
+        # Update the controller and apply steering
 
-        joypad.update()
+        ctl.update()
 
-        if joypad.left_stick_y < -deadzone:
-            rover.reverse(-joypad.left_stick_y)
-        elif joypad.left_stick_y > deadzone:
-            rover.forward(joypad.left_stick_y)
-        elif joypad.right_stick_x < -deadzone:
-            rover.turn_left(-joypad.right_stick_x)
-        elif joypad.right_stick_x > deadzone:
-            rover.turn_right(joypad.right_stick_x)
-        else:
-            rover.stop()
+        steering.apply(rover, ctl)
 
         # Update the rover 
 

@@ -1,4 +1,4 @@
-from controllers.base import ControllerBase
+from controllers import ControllerBase
 import socket
 import json
 
@@ -6,7 +6,7 @@ localIP         = "192.168.86.97"
 localPort       = 20001
 bufferSize      = 1024
 
-class UdpJoypad(ControllerBase):
+class UdpController(ControllerBase):
     def __init__(self):
         super().__init__()
         self.UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
