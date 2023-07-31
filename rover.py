@@ -1,6 +1,6 @@
-import brickpi # import the BrickPi3 drivers
+import brickpi3 # import the BrickPi3 drivers
 
-BP = brickpi.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
+BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
 
 class Rover:
 

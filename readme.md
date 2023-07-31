@@ -13,12 +13,10 @@
 
     git clone git@github.com:kevinbyrom/BrickPiRover.git
 
-4. Install BrickPi module [instructions](https://www.dexterindustries.com/BrickPi/brickpi-tutorials-documentation/program-it/python/#:~:text=Installation,directory)
+4. Install BrickPi module [instructions](https://www.dexterindustries.com/BrickPi/brickpi3-getting-started-step-4-program-brickpi-robot/brickpi3-getting-started-program-python/)
 
-    git clone git@github.com:kevinbyrom/BrickPi3.git
-    cd BrickPi3/Software/Python
-    sudo apt-get install python-setuptools
-    sudo python setup.py install
+    curl -kL dexterindustries.com/update_brickpi3 | bash
+    sudo reboot
 
 4. Configure settings
 5. Run the Rover 
