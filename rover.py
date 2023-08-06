@@ -16,12 +16,12 @@ class Rover:
 
         # Setup tracks
 
-        tracks = TracksComponent(self, self.motor_a, self.motor.d)
+        tracks = TracksComponent(self, self.motor_a, self.motor_d)
         self.add_component(tracks)
 
         # Setup UDP controller
 
-        udpController = UdpControllerComponent(self, "192.168.86.97", 20001)
+        udpController = UdpControllerComponent(self, "192.168.86.97", 20001, tracks)
         self.add_component(udpController)
 
 
@@ -37,7 +37,7 @@ class Rover:
 
 
     def add_component(self, component):
-        component_type = type(component)
+        component_type = type(component).__name__
         self.components[component_type] = component
 
 
@@ -50,7 +50,7 @@ class Rover:
     
 
     def get_all_components(self):
-        return self.components.itervalues()
+        return self.components.values()
 
 
     def update(self):

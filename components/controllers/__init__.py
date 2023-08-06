@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
+from components import ComponentBase
 
-class ControllerBase():
-    def __init__(self):
-
+class ControllerBase(ComponentBase):
+    def __init__(self, rover):
+        super().__init__(rover)
+        
         # Initialize the stick values
 
         self.back = False
@@ -10,7 +12,7 @@ class ControllerBase():
         self.left_stick_y = 0.0
         self.right_stick_x = 0.0
         self.right_stick_y = 0.0
-        super().__init__()
+        
 
     @abstractmethod
     def update(self):

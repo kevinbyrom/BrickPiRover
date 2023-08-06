@@ -6,5 +6,13 @@ class ComponentBase():
         super().__init__()
 
     @abstractmethod
+    def startup(self):
+        pass
+
+    @abstractmethod
     def update(self):
+        pass
+
+    @abstractmethod
+    def shutdown(self):
         pass

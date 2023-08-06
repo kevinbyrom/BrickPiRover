@@ -1,5 +1,7 @@
 from components.controllers import ControllerBase
 from components.controllers import InputState
+from components.driving.tracks import TracksComponent
+
 from steering.dual_stick import steer
 import socket
 import json
@@ -7,11 +9,12 @@ import json
 bufferSize = 1024
 
 class UdpControllerComponent(ControllerBase):
-    def __init__(self, rover, ip, port):
+    def __init__(self, rover, ip, port, tracks):
         super().__init__(rover)
         self.UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         self.UDPServerSocket.bind((ip, port))
         self.steering_behavior = steer
+        self.tracks = tracks
 
     def update(self):
 
@@ -29,8 +32,7 @@ class UdpControllerComponent(ControllerBase):
             state.right_stick_x = float(data[2])
             state.right_stick_y = float(data[3])
             
-            tracks = self.rover.get_component()
-            steer(tracks, state)
+            steer(self.tracks, state)
 
         except Exception as e:
             print('Error occured reading udp:' + e)
