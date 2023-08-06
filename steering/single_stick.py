@@ -1,5 +1,5 @@
-from rover import Rover
-from controllers import ControllerBase
+from components.driving import DrivingComponentBase
+from components.controllers import InputState
 
 deadzone = 0.05
 
@@ -14,16 +14,16 @@ deadzone = 0.05
         (-1,-1)
 '''
 
-class SingleStickSteering():
-    def apply(self, rover, controller):
-        if abs(controller.left_stick_x) > deadzone or abs(controller.left_stick_y) > deadzone:
-            
-            thrust_pct = abs(controller.left_stick_y)
-            thrust_power = controller.left_stick_y * thrust_pct
+def steer(driver : DrivingComponentBase, state : InputState):
+    if abs(state.left_stick_x) > deadzone or abs(state.left_stick_y) > deadzone:
+        
+        thrust_pct = abs(state.left_stick_y)
+        thrust_power = state.left_stick_y * thrust_pct
 
-            left_turn_power = controller.left_stick_x * (1 - thrust_pct)
-            right_turn_power = -left_turn_power * (1 - thrust_pct)
+        left_turn_power = state.left_stick_x * (1 - thrust_pct)
+        right_turn_power = -left_turn_power * (1 - thrust_pct)
 
-            rover.thrust(thrust_power + left_turn_power, thrust_power + right_turn_power) 
-        else:
-            rover.stop()
+        driver.thrust(thrust_power + left_turn_power, thrust_power + right_turn_power) 
+    else:
+        driver.stop()
+    

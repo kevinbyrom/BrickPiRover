@@ -1,58 +1,57 @@
 import brickpi3 # import the BrickPi3 drivers
-
-BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
+from motor import Motor
+from components.driving.tracks import TracksComponent
+from components.controllers.udp import UdpControllerComponent
 
 class Rover:
 
     def __init__(self):
         print('Initializing rover...')
-        self.left_motor = 0.0
-        self.right_motor = 0.0
+        
+        self.bp = brickpi3.BrickPi3()
+        self.motor_a = Motor(self.bp, self.bp.PORT_A)
+        self.motor_d = Motor(self.bp, self.bp.PORT_D)
+
+        self.components = {}
+
+        # Setup tracks
+
+        tracks = TracksComponent(self, self.motor_a, self.motor.d)
+        self.add_component(tracks)
+
+        # Setup UDP controller
+
+        udpController = UdpControllerComponent(self, "192.168.86.97", 20001)
+        self.add_component(udpController)
+
 
     def startup(self):
-        BP.offset_motor_encoder(BP.PORT_A, BP.get_motor_encoder(BP.PORT_A)) # reset encoder A
-        BP.offset_motor_encoder(BP.PORT_D, BP.get_motor_encoder(BP.PORT_D)) # reset encoder D
+        for c in self.get_all_components():
+            c.startup()
+
 
     def shutdown(self):
-        BP.reset_all() 
+        for c in self.get_all_components():
+            c.shutdown()
+        self.bp.reset_all() 
+
+
+    def add_component(self, component):
+        component_type = type(component).__name__
+        self.components[component_type] = component
+
+
+    def get_component(self, component_type):
+        return self.components.get(component_type)
+
+
+    def get_all_components(self):
+        return self.components.itervalues()
+
 
     def update(self):
         print('Updating rover')
+        for c in self.get_all_components():
+            c.update()
 
-        # Convert the motor values to -100 / 100 and send output to the NXT motor
 
-        left_power = self.left_motor * 100
-        right_power = self.right_motor * 100
-        print('Setting motor powers: {}, {}'.format(left_power, right_power))
-        BP.set_motor_power(BP.PORT_A, left_power)
-        BP.set_motor_power(BP.PORT_D, right_power)
-
-    def stop(self):
-        print('Stopping')
-        self.left_motor = 0.0
-        self.right_motor = 0.0
-
-    def thrust(self, left_power, right_power):
-        print('Moving forward')
-        self.left_motor = left_power
-        self.right_motor = right_power
-
-    def forward(self, power):
-        print('Moving forward')
-        self.left_motor = power
-        self.right_motor = power
-
-    def reverse(self, power):
-        print('Moving back')
-        self.left_motor = -power
-        self.right_motor = -power
-
-    def turn_left(self, power):
-        print('Turning left')
-        self.left_motor = -power
-        self.right_motor = power
-
-    def turn_right(self, power):
-        print('Turning right')
-        self.left_motor = power
-        self.right_motor = -power

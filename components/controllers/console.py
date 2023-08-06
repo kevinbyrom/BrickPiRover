@@ -1,6 +1,6 @@
-from controllers import ControllerBase
+'''from controllers import ControllerBase
 
-class ConsoleController(ControllerBase):
+class ConsoleControllerComponent(ControllerBase):
     def __init__(self):
         super().__init__()
 
@@ -26,5 +26,5 @@ class ConsoleController(ControllerBase):
         elif cmd == 'b':
             self.back = True
     
-
+'''
 
