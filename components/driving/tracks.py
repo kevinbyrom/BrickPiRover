@@ -10,8 +10,8 @@ class TracksComponent(DrivingComponentBase):
         right_power = self.right_throttle * 100
 
         print('Setting motor powers: {}, {}'.format(left_power, right_power))
-        self.left_motor.set_power(50)#left_power)
-        self.right_motor.set_power(50)#right_power)
+        self.left_motor.set_power(left_power)
+        self.right_motor.set_power(right_power)
     
 
     def stop(self):
