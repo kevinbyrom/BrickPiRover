@@ -5,10 +5,10 @@ from components.controllers.udp import UdpControllerComponent
 
 class Rover:
 
-    def __init__(self):
+    def __init__(self, bp):
         print('Initializing rover...')
         
-        self.bp = brickpi3.BrickPi3()
+        self.bp = bp
         self.motor_a = Motor(self.bp, self.bp.PORT_A)
         self.motor_d = Motor(self.bp, self.bp.PORT_D)
 
@@ -37,13 +37,17 @@ class Rover:
 
 
     def add_component(self, component):
-        component_type = type(component).__name__
+        component_type = type(component)
         self.components[component_type] = component
 
 
     def get_component(self, component_type):
-        return self.components.get(component_type)
+        return self.components[component_type]
 
+
+    def has_component(self, component_type):
+        return self.components[component_type] is not None
+    
 
     def get_all_components(self):
         return self.components.itervalues()
