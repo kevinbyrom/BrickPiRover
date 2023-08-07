@@ -1,7 +1,8 @@
 import brickpi3 # import the BrickPi3 drivers
 from motor import Motor
 from components.driving.tracks import TracksComponent
-from components.controllers.udp import UdpControllerComponent
+from components.controllers.manual import ManualControllerComponent
+from input.udp import UdpGamepad
 
 class Rover:
 
@@ -21,8 +22,9 @@ class Rover:
 
         # Setup UDP controller
 
-        udpController = UdpControllerComponent(self, "192.168.86.97", 20001, tracks)
-        self.add_component(udpController)
+        gamepad = UdpGamepad("192.168.86.97", 20001)
+        controller = ManualControllerComponent(self, gamepad, tracks)
+        self.add_component(controller)
 
 
     def startup(self):

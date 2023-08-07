@@ -1,11 +1,11 @@
 from components.driving import DrivingComponentBase
-from components.controllers import InputState
+from input import GamepadState
 
 
 deadzone = 0.1
 
 
-def steer(driver : DrivingComponentBase, state : InputState):
+def steer(driver : DrivingComponentBase, state : GamepadState):
     if state.left_stick_y < -deadzone:
         driver.reverse(-state.left_stick_y)
     elif state.left_stick_y > deadzone:

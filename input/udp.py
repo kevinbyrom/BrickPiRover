@@ -1,22 +1,17 @@
-from components.controllers import ControllerBase
-from components.controllers import InputState
-from components.driving.tracks import TracksComponent
-
-from steering.dual_stick import steer
+from input import GamepadBase
+from input import GamepadState
 import socket
 import json
 
 bufferSize = 1024
 
-class UdpControllerComponent(ControllerBase):
-    def __init__(self, rover, ip, port, tracks):
-        super().__init__(rover)
+class UdpGamepad(GamepadBase):
+    def __init__(self, ip, port):
+        super().__init__()
         self.UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         self.UDPServerSocket.bind((ip, port))
-        self.steering_behavior = steer
-        self.tracks = tracks
 
-    def update(self):
+    def get_current_state(self):
 
         try:
             bytesAddressPair = self.UDPServerSocket.recvfrom(bufferSize)
@@ -26,17 +21,17 @@ class UdpControllerComponent(ControllerBase):
             message = message.decode("utf-8")
             data = message.split(",")
 
-            state = InputState()
+            state = GamepadState()
             state.left_stick_x = float(data[0])
             state.left_stick_y = float(data[1])
             state.right_stick_x = float(data[2])
             state.right_stick_y = float(data[3])
             
-            steer(self.tracks, state)
+            return state
 
         except Exception as e:
             print('Error occured reading udp:' + e)
-
+            return None
             
     
 
